@@ -1,47 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>小年快乐</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>灶王爷的童话小院 · 小年快乐</title>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #ffe6e6;
-      font-family: "Microsoft YaHei", sans-serif;
-      text-align: center;
-      padding: 30px;
+      background: linear-gradient(to bottom, #ffecd2, #fcb69f);
+      font-family: "Ma Shan Zheng", "Microsoft YaHei", cursive;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+      padding: 20px;
     }
-    h1 { color: #c32; margin: 20px 0; }
-    .btn {
-      display: inline-block;
-      margin: 15px;
-      padding: 12px 24px;
-      background: #ff6b6b;
-      color: white;
-      border-radius: 30px;
+    @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+    
+    .scene {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      height: 80vh;
+      background: url('https://cdn.pixabay.com/photo/2020/01/07/11/47/chinese-new-year-4748582_960_720.png') no-repeat center;
+      background-size: contain;
+      background-position: top;
+    }
+    .character {
+      position: absolute;
       cursor: pointer;
+      transition: transform 0.2s;
     }
-    #msg {
-      margin-top: 20px;
+    .character:hover { transform: scale(1.05); }
+    #zaowang { top: 30%; left: 15%; width: 80px; }
+    #tanggua { bottom: 20%; left: 40%; width: 70px; }
+    #cat { bottom: 15%; right: 25%; width: 60px; }
+    #dog { bottom: 18%; right: 10%; width: 70px; }
+    #lantern1 { top: 10%; left: 30%; width: 40px; }
+    #lantern2 { top: 8%; left: 50%; width: 45px; }
+    #lantern3 { top: 10%; right: 30%; width: 40px; }
+    #hongbao-tree { top: 25%; right: 15%; width: 60px; }
+    #window { top: 20%; left: 60%; width: 50px; }
+
+    #fireworks-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #e91e63;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       font-size: 18px;
-      color: #d32f2f;
-      min-height: 26px;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    #message {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 16px;
+      color: #c23531;
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .show { opacity: 1 !important; }
+
+    .footer {
+      text-align: center;
+      margin-top: 10px;
+      color: #5a2a27;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <h1>🏮 小年快乐！</h1>
-  <div>
-    <div class="btn" onclick="show('甜甜蜜蜜一整年！')">点我接糖瓜</div>
-    <div class="btn" onclick="show('上天言好事，下界保平安！')">灶王爷赐福</div>
-    <div class="btn" onclick="show(['万事如意','财源广进','平安喜乐'][Math.floor(Math.random()*3)])">拆红包</div>
+  <div class="scene">
+    <button id="fireworks-btn">🎆</button>
+    
+    <img src="https://cdn-icons-png.flaticon.com/512/2521/2521922.png" class="character" id="zaowang" title="灶王爷">
+    <img src="https://cdn-icons-png.flaticon.com/512/3003/3003962.png" class="character" id="tanggua" title="糖瓜">
+    <img src="https://cdn-icons-png.flaticon.com/512/3075/3075822.png" class="character" id="cat" title="小花猫">
+    <img src="https://cdn-icons-png.flaticon.com/512/3075/3075823.png" class="character" id="dog" title="旺财">
+    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991155.png" class="character" id="hongbao-tree" title="红包树">
+    <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" class="character" id="window" title="窗花">
+    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991188.png" class="character" id="lantern1">
+    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991188.png" class="character" id="lantern2">
+    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991188.png" class="character" id="lantern3">
+
+    <div id="message">小年吉祥！</div>
   </div>
-  <div id="msg"></div>
+
+  <div class="footer">灶火暖，糖瓜甜，小年到，福满院 🏮</div>
 
   <script>
-    function show(msg) {
-      document.getElementById('msg').innerText = typeof msg === 'string' ? msg : msg();
+    const messages = [
+      "甜掉牙啦～一整年都甜蜜！",
+      "上天言好事，下界保平安！",
+      "喵~新年有鱼吃！",
+      "汪汪！福气掉下来啦！",
+      "财源滚滚，好运连连！",
+      "万事如意，阖家幸福！",
+      "扫尘除旧岁，迎福纳新祥",
+      "小年吉祥，福气满满！"
+    ];
+
+    const messageEl = document.getElementById('message');
+
+    function showMessage(text) {
+      messageEl.textContent = text;
+      messageEl.classList.add('show');
+      setTimeout(() => messageEl.classList.remove('show'), 3000);
     }
+
+    document.getElementById('zaowang').addEventListener('click', () => showMessage("上天言好事，下界保平安！"));
+    document.getElementById('tanggua').addEventListener('click', () => showMessage("甜掉牙啦～一整年都甜蜜！"));
+    document.getElementById('cat').addEventListener('click', () => showMessage("喵~新年有鱼吃！"));
+    document.getElementById('dog').addEventListener('click', () => showMessage("汪汪！福气掉下来啦！"));
+    document.getElementById('window').addEventListener('click', () => showMessage("扫尘除旧岁，迎福纳新祥"));
+    document.getElementById('hongbao-tree').addEventListener('click', () => {
+      const msg = messages[Math.floor(Math.random() * 8)];
+      showMessage(msg);
+    });
+
+    // 烟花效果（简化版）
+    document.getElementById('fireworks-btn').addEventListener('click', () => {
+      showMessage("🎇 新年烟花，为你绽放！");
+      // 实际项目可用 canvas 动画，此处简化
+    });
+
+    // 灯笼点击（示例）
+    ['lantern1','lantern2','lantern3'].forEach(id => {
+      document.getElementById(id).addEventListener('click', () => {
+        showMessage("灯笼亮啦！照亮一整年～");
+      });
+    });
   </script>
 </body>
 </html>
