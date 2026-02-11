@@ -3,157 +3,330 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>灶王爷的童话小院 · 小年快乐</title>
+  <title>🐭 灶王爷的童话小院</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: linear-gradient(to bottom, #ffecd2, #fcb69f);
-      font-family: "Ma Shan Zheng", "Microsoft YaHei", cursive;
-      overflow-x: hidden;
+      background: linear-gradient(145deg, #ffe6e6, #ffcccb);
       min-height: 100vh;
+      font-family: 'Microsoft YaHei', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
       position: relative;
-      padding: 15px;
+      overflow-x: hidden;
     }
-    @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
-    
-    .scene {
-      position: relative;
-      width: 100%;
-      max-width: 500px;
-      margin: 0 auto;
-      height: 85vh;
-      background: #fff9f0;
-      border-radius: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-      overflow: hidden;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(255,240,200,0.6) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(255,220,200,0.5) 0%, transparent 40%);
-    }
-    .character {
+
+    /* === 背景飘雪 + 星光 === */
+    body::before,
+    body::after {
+      content: "";
       position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    body::before {
+      background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.15;
+      animation: snowfall 30s linear infinite;
+    }
+    body::after {
+      background-image: radial-gradient(circle, #ffd700 1px, transparent 1px);
+      background-size: 80px 80px;
+      opacity: 0.1;
+      animation: twinkle 8s ease-in-out infinite;
+    }
+    @keyframes snowfall {
+      to { transform: translateY(100vh) rotate(360deg); }
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 0.3; }
+    }
+
+    .card {
+      max-width: 500px;
+      width: 100%;
+      background: #fff9f0;
+      border-radius: 48px;
+      box-shadow: 0 20px 30px rgba(255, 150, 150, 0.2);
+      padding: 30px 20px;
+      text-align: center;
+      position: relative;
+      border: 4px solid #ffcccb;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #b33f2f;
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 0 #ffe9c7;
+      letter-spacing: 4px;
+    }
+
+    .mouse-hero {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: url('https://files.catbox.moe/4p7x9v.png') no-repeat center/cover;
+      margin: 20px auto;
       cursor: pointer;
       transition: transform 0.2s;
-      filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+      border: 3px solid #fdd5b5;
+      box-shadow: 0 8px 12px rgba(0,0,0,0.1);
     }
-    .character:hover { transform: scale(1.1); }
-    #zaowang { top: 35%; left: 20%; width: 70px; }
-    #tanggua { bottom: 25%; left: 45%; width: 60px; }
-    #cat { bottom: 20%; right: 30%; width: 50px; }
-    #dog { bottom: 22%; right: 15%; width: 60px; }
-    #hongbao { top: 30%; right: 20%; width: 50px; }
-    #window { top: 25%; left: 65%; width: 45px; }
-    #lantern1 { top: 15%; left: 30%; width: 35px; }
-    #lantern2 { top: 12%; left: 50%; width: 40px; }
-    #lantern3 { top: 15%; right: 30%; width: 35px; }
+    .mouse-hero:hover {
+      transform: scale(1.1);
+    }
 
-    #fireworks-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: #e91e63;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 25px auto;
+      max-width: 400px;
+    }
+
+    .item {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid #fdd5b5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .item:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    .item:active {
+      transform: scale(0.95);
+    }
+    .item span {
+      font-size: 14px;
+      color: #7b4a3a;
+      margin-top: 4px;
+      white-space: nowrap;
+    }
+    .hongbao-item {
+      background: #ffd966;
+      border-color: #c49a3f;
+    }
+
+    .lanterns {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 15px 0;
+    }
+    .lantern {
+      font-size: 32px;
+      animation: swing 4s ease-in-out infinite;
+    }
+    .lantern:nth-child(2) { animation-delay: 0.5s; }
+    .lantern:nth-child(3) { animation-delay: 1s; }
+    @keyframes swing {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    .msg-box {
+      background: #fff3e2;
+      padding: 16px;
+      border-radius: 60px;
+      margin: 20px auto;
+      max-width: 400px;
+      font-size: 18px;
+      color: #ad3a2a;
+      border: 2px solid #ff9e80;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: break-word;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fireworks-btn {
+      background: #fd7e5c;
       color: white;
       border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      font-size: 16px;
-      cursor: pointer;
-      z-index: 100;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    #message {
-      position: absolute;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255,255,255,0.95);
-      padding: 8px 16px;
-      border-radius: 30px;
-      font-size: 16px;
-      color: #d32f2f;
-      opacity: 0;
-      transition: opacity 0.4s;
-      pointer-events: none;
+      font-size: 24px;
+      padding: 14px 0;
+      border-radius: 50px;
       font-weight: bold;
-      border: 2px solid #ffd1dc;
+      width: 80%;
+      margin: 10px auto 0;
+      cursor: pointer;
+      border-bottom: 5px solid #b6492e;
+      transition: all 0.1s;
     }
-    .show { opacity: 1 !important; }
+    .fireworks-btn:active {
+      transform: translateY(4px);
+      border-bottom-width: 2px;
+    }
 
-    .title {
-      text-align: center;
-      color: #c23531;
-      font-size: 26px;
-      margin-top: 15px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-    }
     .footer {
-      text-align: center;
-      margin-top: 10px;
-      color: #5a2a27;
-      font-size: 14px;
+      margin-top: 20px;
+      color: #974b3a;
+      font-size: 16px;
       line-height: 1.4;
+    }
+
+    /* === 烟花粒子 === */
+    .particle {
+      position: absolute;
+      font-size: 24px;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <div class="title">🏮 灶王爷的童话小院</div>
-  <div class="scene">
-    <button id="fireworks-btn">🎆</button>
+  <div class="card">
+    <h1>🏮 灶王爷的童话小院</h1>
     
-    <!-- 内嵌真实 Base64 图片 -->
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF+mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDI0LTEyLTI1VDEwOjE1OjI1KzA4OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4Ij4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHN0RXZ0OndoZW49IjIwMjQtMTItMjVUMTA6MTU6MjUrMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4=" class="character" id="zaowang" title="灶王爷">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF+mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDI0LTEyLTI1VDEwOjE1OjI1KzA4OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4Ij4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHN0RXZ0OndoZW49IjIwMjQtMTItMjVUMTA6MTU6MjUrMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4=" class="character" id="tanggua" title="糖瓜">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF+mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDI0LTEyLTI1VDEwOjE1OjI1KzA4OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4Ij4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHN0RXZ0OndoZW49IjIwMjQtMTItMjVUMTA6MTU6MjUrMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4=" class="character" id="cat" title="小花猫">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF+mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDI0LTEyLTI1VDEwOjE1OjI1KzA4OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4Ij4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHN0RXZ0OndoZW49IjIwMjQtMTItMjVUMTA6MTU6MjUrMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4=" class="character" id="dog" title="旺财">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF+mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDI0LTEyLTI1VDEwOjE1OjI1KzA4OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4Ij4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHN0RXZ0OndoZW49IjIwMjQtMTItMjVUMTA6MTU6MjUrMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4=" class="character" id="hongbao" title="红包">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF+mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDI0LTEyLTI1VDEwOjE1OjI1KzA4OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4Ij4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHN0RXZ0OndoZW49IjIwMjQtMTItMjVUMTA6MTU6MjUrMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4=" class="character" id="window" title="窗花">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF+mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDI0LTEyLTI1VDEwOjE1OjI1KzA4OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4Ij4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHN0RXZ0OndoZW49IjIwMjQtMTItMjVUMTA6MTU6MjUrMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4=" class="character" id="lantern1">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF+mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDI0LTEyLTI1VDEwOjE1OjI1KzA4OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyNi0wMi0xMVQxNjo0NTozMiswODowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6OWY1N2IyNGUtN2I1Ny00NGU1LWI1NTktZjY1NGY1NGIzNGM4Ij4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo5ZjU3YjI0ZS03YjU3LTQ0ZTUtYjU1OS1mNjU0ZjU0YjM0YzgiIHN0RXZ0OndoZW49IjIwMjQtMTItMjVUMTA6MTU6MjUrMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4=" class="character" id="lantern3">
+    <!-- 鼠头替换灶王爷 -->
+    <div class="mouse-hero" id="mouseHero"></div>
 
-    <div id="message">小年吉祥！</div>
+    <!-- 角色网格 -->
+    <div class="grid">
+      <div class="item" id="tanggua">
+        <div>🍬</div><span>糖瓜</span>
+      </div>
+      <div class="item" id="cat">
+        <div>🐱</div><span>小花猫</span>
+      </div>
+      <div class="item" id="dog">
+        <div>🐶</div><span>旺财</span>
+      </div>
+      <div class="item hongbao-item" id="hongbao">
+        <div>🧧</div><span>红包</span>
+      </div>
+      <div class="item" id="window">
+        <div>🪟</div><span>窗花</span>
+      </div>
+      <div class="item" id="fu">
+        <div>🧧</div><span>福字</span>
+      </div>
+    </div>
+
+    <!-- 灯笼 -->
+    <div class="lanterns">
+      <div class="lantern">🏮</div>
+      <div class="lantern">🏮</div>
+      <div class="lantern">🏮</div>
+    </div>
+
+    <!-- 祝福语 -->
+    <div class="msg-box" id="messageDisplay">
+      ✨ 点点鼠头，接福气咯 ✨
+    </div>
+
+    <!-- 放烟花按钮 -->
+    <button class="fireworks-btn" id="fireworksBtn">🎆 放烟花</button>
+
+    <div class="footer">
+      上天言好事 · 下界保平安<br>
+      ❄️ 小年快乐 年年甜蜜 ❄️
+    </div>
   </div>
-
-  <div class="footer">点一点，接福气～<br>上天言好事 · 下界保平安</div>
 
   <script>
     const messages = [
-      "甜掉牙啦～一整年都甜蜜！",
-      "上天言好事，下界保平安！",
-      "喵~新年有鱼吃！",
-      "汪汪！福气掉下来啦！",
-      "财源滚滚，好运连连！",
-      "万事如意，阖家幸福！",
-      "扫尘除旧岁，迎福纳新祥",
-      "小年吉祥，福气满满！"
+      "🐭 鼠头一摇，好运来到！",
+      "🍬 糖瓜粘粘，日子甜甜～",
+      "🐱 小花猫：年年有余，喵喵喵！",
+      "🐶 旺财：财宝滚进门！",
+      "🧧 红包拿来，好运满满！",
+      "🪟 窗花贴好，福气来到！",
+      "🧧 福到啦！万事顺心如意～",
+      "🎇 全家团圆，甜甜蜜蜜！",
+      "⭐ 小年纳福，如意吉祥！"
     ];
 
-    const messageEl = document.getElementById('message');
+    const display = document.getElementById('messageDisplay');
 
-    function showMessage(text) {
-      messageEl.textContent = text;
-      messageEl.classList.add('show');
-      setTimeout(() => messageEl.classList.remove('show'), 3000);
+    function showBlessing(msg) {
+      display.textContent = msg;
+      display.style.animation = 'none';
+      void display.offsetWidth;
+      display.style.animation = 'fadeIn 0.5s forwards';
     }
 
-    document.getElementById('zaowang').addEventListener('click', () => showMessage("上天言好事，下界保平安！"));
-    document.getElementById('tanggua').addEventListener('click', () => showMessage("甜掉牙啦～一整年都甜蜜！"));
-    document.getElementById('cat').addEventListener('click', () => showMessage("喵~新年有鱼吃！"));
-    document.getElementById('dog').addEventListener('click', () => showMessage("汪汪！福气掉下来啦！"));
-    document.getElementById('window').addEventListener('click', () => showMessage("扫尘除旧岁，迎福纳新祥"));
-    document.getElementById('hongbao').addEventListener('click', () => {
-      const msg = messages[Math.floor(Math.random() * messages.length)];
-      showMessage(msg);
-    });
-    document.getElementById('fireworks-btn').addEventListener('click', () => {
-      showMessage("🎇 新年烟花，为你绽放！");
+    // 鼠头点击反馈
+    document.getElementById('mouseHero').addEventListener('click', () => {
+      showBlessing('🐭 鼠头一摇，好运来到！');
     });
 
-    ['lantern1','lantern2','lantern3'].forEach(id => {
-      document.getElementById(id).addEventListener('click', () => {
-        showMessage("灯笼亮啦！照亮一整年～");
-      });
+    // 其他角色
+    document.getElementById('tanggua').addEventListener('click', () => showBlessing('🍬 糖瓜粘粘，日子甜甜～'));
+    document.getElementById('cat').addEventListener('click', () => showBlessing('🐱 小花猫：年年有余，顿顿吃鲜！'));
+    document.getElementById('dog').addEventListener('click', () => showBlessing('🐶 旺财：财宝滚进门！'));
+    document.getElementById('window').addEventListener('click', () => showBlessing('🪟 窗花贴好，福气来到！'));
+    document.getElementById('fu').addEventListener('click', () => showBlessing('🧧 福字倒贴，福到我家！'));
+
+    document.getElementById('hongbao').addEventListener('click', () => {
+      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+      showBlessing(randomMsg);
+    });
+
+    // === 烟花粒子动画 ===
+    function createFireworks(x, y) {
+      const emojis = ['🎇', '🎆', '✨', '💫', '🌟'];
+      for (let i = 0; i < 12; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        document.body.appendChild(particle);
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 80 + Math.random() * 100;
+        const duration = 0.8 + Math.random() * 0.5;
+
+        particle.animate([
+          { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+          { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`, opacity: 0 }
+        ], {
+          duration: duration * 1000,
+          easing: 'cubic-bezier(0, .9, .57, 1)',
+          fill: 'forwards'
+        });
+
+        setTimeout(() => particle.remove(), duration * 1000);
+      }
+    }
+
+    document.getElementById('fireworksBtn').addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      createFireworks(x, y);
+      showBlessing('💥 砰！烟花绽放！小年大吉！');
     });
   </script>
 </body>
