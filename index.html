@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小年快乐</title>
+  <style>
+    body {
+      background: #ffe6e6;
+      font-family: "Microsoft YaHei", sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 { color: #c32; margin: 20px 0; }
+    .btn {
+      display: inline-block;
+      margin: 15px;
+      padding: 12px 24px;
+      background: #ff6b6b;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+    #msg {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #d32f2f;
+      min-height: 26px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🏮 小年快乐！</h1>
+  <div>
+    <div class="btn" onclick="show('甜甜蜜蜜一整年！')">点我接糖瓜</div>
+    <div class="btn" onclick="show('上天言好事，下界保平安！')">灶王爷赐福</div>
+    <div class="btn" onclick="show(['万事如意','财源广进','平安喜乐'][Math.floor(Math.random()*3)])">拆红包</div>
+  </div>
+  <div id="msg"></div>
+
+  <script>
+    function show(msg) {
+      document.getElementById('msg').innerText = typeof msg === 'string' ? msg : msg();
+    }
+  </script>
+</body>
+</html>
