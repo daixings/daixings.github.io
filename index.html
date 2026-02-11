@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🐭 灶王爷的童话小院</title>
+  <title> 🐭鼠鼠的小年祝福店🐭  </title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -18,8 +18,7 @@
       overflow-x: hidden;
     }
 
-    /* === 背景飘雪 + 星光 === */
-    body::before,
+    /* === 底层星光（静态点缀）=== */
     body::after {
       content: "";
       position: absolute;
@@ -28,30 +27,21 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: -1;
+      z-index: -2;
+      background-image: 
+        radial-gradient(circle, #ffd700 1px, transparent 1px),
+        radial-gradient(circle, #ffffff 0.8px, transparent 0.8px);
+      background-size: 100px 100px, 180px 180px;
+      opacity: 0.12;
+      animation: twinkle-bg 12s ease-in-out infinite;
     }
-    body::before {
-      background-image: radial-gradient(circle, #fff 1px, transparent 1px);
-      background-size: 40px 40px;
-      opacity: 0.15;
-      animation: snowfall 30s linear infinite;
-    }
-    body::after {
-      background-image: radial-gradient(circle, #ffd700 1px, transparent 1px);
-      background-size: 80px 80px;
-      opacity: 0.1;
-      animation: twinkle 8s ease-in-out infinite;
-    }
-    @keyframes snowfall {
-      to { transform: translateY(100vh) rotate(360deg); }
-    }
-    @keyframes twinkle {
+    @keyframes twinkle-bg {
       0%, 100% { opacity: 0.1; }
-      50% { opacity: 0.3; }
+      50% { opacity: 0.18; }
     }
 
     .card {
-      max-width: 500px;
+      max-width: 520px;
       width: 100%;
       background: #fff9f0;
       border-radius: 48px;
@@ -61,6 +51,7 @@
       position: relative;
       border: 4px solid #ffcccb;
       overflow: hidden;
+      z-index: 1;
     }
 
     h1 {
@@ -75,7 +66,7 @@
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      background: url('https://files.catbox.moe/4p7x9v.png') no-repeat center/cover;
+      background: url('https://files.catbox.moe/mpiyvw.png') no-repeat center/cover;
       margin: 20px auto;
       cursor: pointer;
       transition: transform 0.2s;
@@ -86,12 +77,14 @@
       transform: scale(1.1);
     }
 
+    /* === 礼物网格：完美居中对齐 === */
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 18px;
       margin: 25px auto;
-      max-width: 400px;
+      max-width: 420px;
+      justify-items: center;
     }
 
     .item {
@@ -123,6 +116,7 @@
       color: #7b4a3a;
       margin-top: 4px;
       white-space: nowrap;
+      line-height: 1.2;
     }
     .hongbao-item {
       background: #ffd966;
@@ -194,7 +188,33 @@
       line-height: 1.4;
     }
 
-    /* === 烟花粒子 === */
+    /* === 飘雪 & 闪烁星光（动态）=== */
+    .snowflake,
+    .twinkle-star {
+      position: absolute;
+      top: -20px;
+      font-size: 20px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+    .twinkle-star {
+      font-size: 16px;
+      opacity: 0.9;
+      animation-duration: 6s;
+      animation-name: twinkle-fall;
+    }
+    @keyframes fall {
+      to { transform: translateY(105vh) rotate(360deg); }
+    }
+    @keyframes twinkle-fall {
+      0%   { opacity: 0; transform: translateY(0) rotate(0); }
+      10%  { opacity: 0.9; }
+      90%  { opacity: 0.9; }
+      100% { opacity: 0; transform: translateY(105vh) rotate(720deg); }
+    }
+
     .particle {
       position: absolute;
       font-size: 24px;
@@ -202,50 +222,94 @@
       z-index: 5;
       opacity: 1;
     }
+
+    /* === 通用弹窗样式 === */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-card {
+      background: linear-gradient(140deg, #fff9e6, #ffe0b2);
+      padding: 24px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 300px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transform: scale(0.8);
+      animation: popIn 0.4s forwards;
+    }
+    @keyframes popIn {
+      to { transform: scale(1); }
+    }
+
+    .modal-card h2 {
+      color: #d32f2f;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+    .modal-card p {
+      color: #5d4037;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .modal-btn {
+      background: #ff9800;
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .modal-btn:hover {
+      background: #f57c00;
+    }
   </style>
 </head>
 <body>
+
   <div class="card">
-    <h1>🏮 灶王爷的童话小院</h1>
+    <h1>🏮 鼠鼠的小年礼品店 🏮</h1>
     
-    <!-- 鼠头替换灶王爷 -->
     <div class="mouse-hero" id="mouseHero"></div>
 
-    <!-- 角色网格 -->
+    <!-- 礼物网格 -->
     <div class="grid">
-      <div class="item" id="tanggua">
-        <div>🍬</div><span>糖瓜</span>
-      </div>
-      <div class="item" id="cat">
-        <div>🐱</div><span>小花猫</span>
-      </div>
-      <div class="item" id="dog">
-        <div>🐶</div><span>旺财</span>
-      </div>
-      <div class="item hongbao-item" id="hongbao">
-        <div>🧧</div><span>红包</span>
-      </div>
-      <div class="item" id="window">
-        <div>🪟</div><span>窗花</span>
-      </div>
-      <div class="item" id="fu">
-        <div>🧧</div><span>福字</span>
-      </div>
+      <div class="item" id="tanggua"><div>🎁</div><span>神秘礼物</span></div>
+      <div class="item hongbao-item" id="hongbao"><div>🎁</div><span>神秘礼物</span></div>
+      <div class="item" id="dog"><div>🎁</div><span>神秘礼物</span></div>
+      <div class="item" id="horse1"><div>🎁</div><span>神秘礼物</span></div>
+      <div class="item" id="window"><div>🎁</div><span>神秘礼物</span></div>
+      <div class="item" id="fu"><div>🎁</div><span>神秘礼物</span></div>
     </div>
 
-    <!-- 灯笼 -->
     <div class="lanterns">
       <div class="lantern">🏮</div>
       <div class="lantern">🏮</div>
       <div class="lantern">🏮</div>
     </div>
 
-    <!-- 祝福语 -->
     <div class="msg-box" id="messageDisplay">
-      ✨ 点点鼠头，接福气咯 ✨
+      ✨ 鼠头点点，福气连连！ ✨
     </div>
 
-    <!-- 放烟花按钮 -->
     <button class="fireworks-btn" id="fireworksBtn">🎆 放烟花</button>
 
     <div class="footer">
@@ -254,21 +318,71 @@
     </div>
   </div>
 
+  <!-- 彩蛋1：五福临门 -->
+  <div class="modal-overlay" id="modal1">
+    <div class="modal-card">
+      <h2>🌟 五福临门！</h2>
+      <p>鼠鼠送你五福：<br>满竹🎋、富桂💐、安康🏥、荷睦🪷、幸福😊！</p>
+      <button class="modal-btn" onclick="closeModal('modal1')">✨ 好耶！</button>
+    </div>
+  </div>
+
+  <!-- 彩蛋2：双喜临门 -->
+  <div class="modal-overlay" id="modal2">
+    <div class="modal-card">
+      <h2>🎉 双喜临门！</h2>
+      <p>好事成双！<br>福气 ×2，快乐 ×2，好运 ×2！</p>
+      <button class="modal-btn" onclick="closeModal('modal2')">💖 收下啦！</button>
+    </div>
+  </div>
+
+  <!-- 彩蛋3：兑奖券 -->
+  <div class="modal-overlay" id="modal3">
+    <div class="modal-card">
+      <h2>🎫 鼠鼠秘藏兑奖券</h2>
+      <p>凭此券可兑换：<br>
+        • 一整年的好运 🍀<br>
+        • 鼠鼠的真心祝福 🧧<br>
+      </p>
+      <button class="modal-btn" onclick="closeModal('modal3')">🎁 我已领取</button>
+    </div>
+  </div>
+
   <script>
-    const messages = [
-      "🐭 鼠头一摇，好运来到！",
-      "🍬 糖瓜粘粘，日子甜甜～",
-      "🐱 小花猫：年年有余，喵喵喵！",
-      "🐶 旺财：财宝滚进门！",
-      "🧧 红包拿来，好运满满！",
-      "🪟 窗花贴好，福气来到！",
-      "🧧 福到啦！万事顺心如意～",
-      "🎇 全家团圆，甜甜蜜蜜！",
-      "⭐ 小年纳福，如意吉祥！"
-    ];
+    // === 关闭弹窗函数 ===
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
 
+    // === 动态生成雪花和星光 ===
+    function createSnowAndStars() {
+      const container = document.body;
+      const total = 25;
+      for (let i = 0; i < total; i++) {
+        if (Math.random() > 0.3) {
+          const snow = document.createElement('div');
+          snow.className = 'snowflake';
+          snow.textContent = '❄️';
+          snow.style.left = Math.random() * 100 + '%';
+          snow.style.fontSize = (16 + Math.random() * 12) + 'px';
+          snow.style.opacity = 0.6 + Math.random() * 0.3;
+          snow.style.animationDuration = (8 + Math.random() * 10) + 's';
+          container.appendChild(snow);
+          setTimeout(() => snow.remove(), 18000);
+        } else {
+          const star = document.createElement('div');
+          star.className = 'twinkle-star';
+          star.textContent = '✨';
+          star.style.left = Math.random() * 100 + '%';
+          star.style.animationDelay = Math.random() * 5 + 's';
+          container.appendChild(star);
+          setTimeout(() => star.remove(), 12000);
+        }
+      }
+    }
+
+    // === 显示祝福 ===
     const display = document.getElementById('messageDisplay');
-
     function showBlessing(msg) {
       display.textContent = msg;
       display.style.animation = 'none';
@@ -276,48 +390,136 @@
       display.style.animation = 'fadeIn 0.5s forwards';
     }
 
-    // 鼠头点击反馈
-    document.getElementById('mouseHero').addEventListener('click', () => {
+    // === 礼物配置 ===
+    const giftConfigs = {
+      tanggua: {
+        emojis: ['🍬', '🍭', '🍯', '🍡'],
+        names: ['糖果', '甜宝', '蜜罐', '福丸'],
+        blessings: [
+          '🍬 糖果生欢喜，祥云绕门第！',
+          '🍭 甜甜蜜蜜，马年顺心如意！',
+          '🍯 蜂蜜满罐，福气甜到心坎！',
+          '🍡 团团圆圆，日子红火又香甜！'
+        ]
+      },
+      horse1: {
+        emojis: ['🐎', '🐴', '🏇', '🦄'],
+        names: ['骏马', '小马', '骑手', '天马'],
+        blessings: [
+          '🐎 一马当先，事业高升！',
+          '🐴 龙马精神，健康常伴！',
+          '🏇 策马扬鞭，勇闯新程！',
+          '🦄 天马行空，梦想成真！'
+        ]
+      },
+      dog: {
+        emojis: ['🐶', '🐕', '🐾', '🦮'],
+        names: ['旺财', '小黄', '福爪', '神犬'],
+        blessings: [
+          '🐶 旺财守门，金银满屋！',
+          '🐕 忠诚护家，平安吉祥！',
+          '🐾 福爪踏春，好运连连！',
+          '🦮 神犬引路，贵人相助！'
+        ]
+      },
+      hongbao: {
+        emojis: ['🧧', '💰', '🎁', '🪙'],
+        names: ['红包', '金元宝', '福袋', '铜钱'],
+        blessings: [
+          '🧧 马年红包，好运马上到！',
+          '💰 马上发财，财源滚滚来！',
+          '🎁 福袋一开，惊喜不断！',
+          '🪙 铜钱串串，富贵年年！'
+        ]
+      },
+      window: {
+        emojis: ['🪟', '✂️', '🏮', '🎨'],
+        names: ['窗花', '剪纸', '灯笼', '彩绘'],
+        blessings: [
+          '🪟 窗花映马，春风送福！',
+          '✂️ 巧手剪福，万象更新！',
+          '🏮 灯笼高挂，红红火火！',
+          '🎨 彩绘迎新，生活如画！'
+        ]
+      },
+      fu: {
+        emojis: ['🧧', '🀄', '✨', '🌟'],
+        names: ['福字', '福牌', '星光', '吉星'],
+        blessings: [
+          '🧧 福到我家，马年大吉！',
+          '🀄 福牌镇宅，万事亨通！',
+          '✨ 星光照福，心想事成！',
+          '🌟 吉星高照，好运常伴！'
+        ]
+      }
+    };
+
+    // === 绑定礼物点击 ===
+    Object.keys(giftConfigs).forEach(id => {
+      const el = document.getElementById(id);
+      const config = giftConfigs[id];
+      el.addEventListener('click', function () {
+        let idx = parseInt(this.dataset.currentIndex) || 0;
+        if (!this.dataset.revealed) this.dataset.revealed = 'true';
+        this.querySelector('div').textContent = config.emojis[idx];
+        this.querySelector('span').textContent = config.names[idx];
+        showBlessing(config.blessings[idx]);
+        idx = (idx + 1) % config.emojis.length;
+        this.dataset.currentIndex = idx;
+      });
+    });
+
+    // === 鼠头点击 + 三阶段彩蛋 ===
+    let clickCount = 0;
+    let lastClickTime = 0;
+    const RESET_TIMEOUT = 30000; // 30秒超时重置
+
+    document.getElementById('mouseHero').addEventListener('click', function() {
+      const now = Date.now();
+      if (now - lastClickTime > RESET_TIMEOUT) {
+        clickCount = 0;
+      }
+      clickCount++;
+      lastClickTime = now;
+
+      // 每次都显示基础祝福
       showBlessing('🐭 鼠头一摇，好运来到！');
+
+      // 分阶段触发彩蛋
+      if (clickCount === 5) {
+        document.getElementById('modal1').classList.add('active');
+      } else if (clickCount === 7) {
+        document.getElementById('modal2').classList.add('active');
+      } else if (clickCount === 8) {
+        document.getElementById('modal3').classList.add('active');
+        clickCount = 0; // 重置，可重复玩
+      }
     });
 
-    // 其他角色
-    document.getElementById('tanggua').addEventListener('click', () => showBlessing('🍬 糖瓜粘粘，日子甜甜～'));
-    document.getElementById('cat').addEventListener('click', () => showBlessing('🐱 小花猫：年年有余，顿顿吃鲜！'));
-    document.getElementById('dog').addEventListener('click', () => showBlessing('🐶 旺财：财宝滚进门！'));
-    document.getElementById('window').addEventListener('click', () => showBlessing('🪟 窗花贴好，福气来到！'));
-    document.getElementById('fu').addEventListener('click', () => showBlessing('🧧 福字倒贴，福到我家！'));
-
-    document.getElementById('hongbao').addEventListener('click', () => {
-      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-      showBlessing(randomMsg);
-    });
-
-    // === 烟花粒子动画 ===
+    // === 烟花特效 ===
     function createFireworks(x, y) {
       const emojis = ['🎇', '🎆', '✨', '💫', '🌟'];
       for (let i = 0; i < 12; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        particle.style.left = `${x}px`;
-        particle.style.top = `${y}px`;
-        document.body.appendChild(particle);
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        p.style.left = `${x}px`;
+        p.style.top = `${y}px`;
+        document.body.appendChild(p);
 
         const angle = Math.random() * Math.PI * 2;
-        const distance = 80 + Math.random() * 100;
-        const duration = 0.8 + Math.random() * 0.5;
+        const dist = 80 + Math.random() * 100;
+        const dur = 0.8 + Math.random() * 0.5;
 
-        particle.animate([
-          { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-          { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`, opacity: 0 }
+        p.animate([
+          { transform: 'translate(0,0) scale(1)', opacity: 1 },
+          { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }
         ], {
-          duration: duration * 1000,
+          duration: dur * 1000,
           easing: 'cubic-bezier(0, .9, .57, 1)',
           fill: 'forwards'
         });
-
-        setTimeout(() => particle.remove(), duration * 1000);
+        setTimeout(() => p.remove(), dur * 1000);
       }
     }
 
@@ -328,6 +530,10 @@
       createFireworks(x, y);
       showBlessing('💥 砰！烟花绽放！小年大吉！');
     });
+
+    // 启动背景动画
+    createSnowAndStars();
+    setInterval(createSnowAndStars, 6000);
   </script>
 </body>
 </html>
