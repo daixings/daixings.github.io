@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>教室声音分贝仪</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft YaHei",sans-serif}
+body{background:#f7f9fc;padding:30px;text-align:center}
+.container{max-width:500px;margin:0 auto}
+h1{font-size:24px;color:#333;margin-bottom:20px}
+#db{font-size:80px;font-weight:bold;margin:20px 0;color:#2c3e50}
+.status{font-size:22px;padding:12px 24px;border-radius:12px;display:inline-block;margin-bottom:20px}
+.quiet{background:#e8f5e9;color:#2e7d32}
+.normal{background:#fff8e1;color:#f57f17}
+.loud{background:#ffebee;color:#c62828}
+.tip{color:#666;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>📢 教室声音监测器</h1>
+<div id="db">0 dB</div>
+<div id="status" class="quiet">✅ 非常安静</div>
+<div class="tip">需要允许麦克风权限才能正常使用</div>
+</div>
+
+<script>
+const dbEl = document.getElementById('db')
+const statusEl = document.getElementById('status')
+
+async function start(){
+  const stream = await navigator.mediaDevices.getUserMedia({audio:true})
+  const ac = new AudioContext()
+  const source = ac.createMediaStreamSource(stream)
+  const analyser = ac.createAnalyser()
+  analyser.fftSize = 256
+  source.connect(analyser)
+  const data = new Uint8Array(analyser.frequencyBinCount)
+
+  function update(){
+    analyser.getByteFrequencyData(data)
+    let sum = 0
+    for(let v of data) sum += v
+    let avg = sum / data.length
+    let db = Math.round(avg * 1.2)
+    db = Math.max(0, Math.min(120, db))
+    dbEl.textContent = db + ' dB'
+
+    if(db < 25){
+      statusEl.className = 'quiet'
+      statusEl.textContent = '✅ 非常安静'
+    }else if(db < 45){
+      statusEl.className = 'normal'
+      statusEl.textContent = '🟡 正常交谈'
+    }else{
+      statusEl.className = 'loud'
+      statusEl.textContent = '🔴 声音过大，请安静！'
+    }
+    requestAnimationFrame(update)
+  }
+  update()
+}
+start().catch(err=>{
+  alert('请允许麦克风权限，否则无法监测声音')
+})
+</script>
+</body>
+</html>
+0–25dB：安静优秀 ✅
+
+25–45dB：正常讨论 🟡
+
+＞45dB：提醒安静 🔴
