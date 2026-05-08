@@ -14,14 +14,23 @@ h1{font-size:24px;color:#333;margin-bottom:20px}
 .normal{background:#fff8e1;color:#f57f17}
 .loud{background:#ffebee;color:#c62828}
 .tip{color:#666;font-size:14px;margin-top:10px}
+/* 分贝规则说明 */
+.standard{margin-top:25px;text-align:left;background:#fff;padding:15px;border-radius:10px}
+.standard p{margin:8px 0;font-size:16px}
 </style>
 </head>
 <body>
 <div class="container">
 <h1>📢 教室声音监测器</h1>
 <div id="db">0 dB</div>
-<div id="status" class="quiet">✅ 非常安静</div>
+<div id="status" class="quiet">✅ 安静优秀</div>
 <div class="tip">需要允许麦克风权限才能正常使用</div>
+
+<div class="standard">
+<p>✅ 0~50分贝：安静优秀</p >
+<p>🟡 50~55分贝：正常讨论</p >
+<p>🔴 大于55分贝：声音过大，请安静</p >
+</div>
 </div>
 
 <script>
@@ -46,15 +55,15 @@ async function start(){
     db = Math.max(0, Math.min(120, db))
     dbEl.textContent = db + ' dB'
 
-    if(db < 25){
+    if(db <= 50){
       statusEl.className = 'quiet'
-      statusEl.textContent = '✅ 非常安静'
-    }else if(db < 45){
+      statusEl.textContent = '✅ 安静优秀'
+    }else if(db <= 55){
       statusEl.className = 'normal'
-      statusEl.textContent = '🟡 正常交谈'
+      statusEl.textContent = '🟡 正常讨论'
     }else{
       statusEl.className = 'loud'
-      statusEl.textContent = '🔴 声音过大，请安静！'
+      statusEl.textContent = '🔴 声音过大，请安静'
     }
     requestAnimationFrame(update)
   }
@@ -66,8 +75,3 @@ start().catch(err=>{
 </script>
 </body>
 </html>
-0–25dB：安静优秀 ✅
-
-25–45dB：正常讨论 🟡
-
-＞45dB：提醒安静 🔴
